@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #8a2fd4, #2980b9);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        header, footer {
+            width: 100%;
+            padding: 10px 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        header h1, footer p {
+            margin: 0;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        .input-group input, .input-group select, .input-group button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+        .input-group button {
+            background-color: #2980b9;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .input-group button:hover {
+            background-color: #3498db;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Temperature Converter</h1>
+    </header>
+    <div class="container">
+        <h2>Convert Temperatures</h2>
+        <div class="input-group">
+            <label for="temperature">Enter Temperature:</label>
+            <input type="number" id="temperature" placeholder="e.g., 32" required>
+        </div>
+        <div class="input-group">
+            <label for="unit">Select Unit:</label>
+            <select id="unit">
+                <option value="celsius">Celsius</option>
+                <option value="fahrenheit">Fahrenheit</option>
+                <option value="kelvin">Kelvin</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <button id="convertBtn">Convert</button>
+        </div>
+        <div class="result" id="result"></div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Temperature Converter. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('convertBtn').addEventListener('click', function() {
+            const temp = parseFloat(document.getElementById('temperature').value);
+            const unit = document.getElementById('unit').value;
+            const resultDiv = document.getElementById('result');
+            
+            if (isNaN(temp)) {
+                resultDiv.textContent = "Please enter a valid number.";
+                return;
+            }
+            
+            let convertedTemp;
+            let convertedUnit;
+
+            if (unit === 'celsius') {
+                convertedTemp = (temp * 9/5) + 32;
+                convertedUnit = 'Fahrenheit';
+                resultDiv.innerHTML = `${temp}° Celsius is ${convertedTemp.toFixed(2)}° Fahrenheit`;
+            } else if (unit === 'fahrenheit') {
+                convertedTemp = (temp - 32) * 5/9;
+                convertedUnit = 'Celsius';
+                resultDiv.innerHTML = `${temp}° Fahrenheit is ${convertedTemp.toFixed(2)}° Celsius`;
+            } else if (unit === 'kelvin') {
+                const celsius = temp - 273.15;
+                const fahrenheit = (celsius * 9/5) + 32;
+                resultDiv.innerHTML = `${temp}° Kelvin is ${celsius.toFixed(2)}° Celsius and ${fahrenheit.toFixed(2)}° Fahrenheit`;
+            }
+        });
+    </script>
+</body>
+</html>
